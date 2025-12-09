@@ -1,0 +1,4 @@
+Gateway localhost:8000
+Microservicio Pruebas: localhost:8001/api/
+Microservicio Empleados: localhost:8002/api/
+Microservicio Notificaciones: localhost:8003/api/

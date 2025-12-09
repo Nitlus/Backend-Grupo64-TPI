@@ -1,0 +1,154 @@
+Postman:
+
+//Cargar archivo interesados.csv
+Body-> form-data -> Key:file, Value:interesados.csv
+POST: http://localhost:8001/api/interesados/cargar
+
+//Mostrar interesados restringidos
+GET: http://localhost:8001/api/interesados/restringidos
+
+//Crear Pruebas
+POST: http://localhost:8001/api/pruebas/nuevaPrueba
+{
+  "vehiculoId": ,
+  "interesadoId": ,
+  "empleadoId": 
+}
+
+//Actualizar prueba
+PUT: http://localhost:8001/api/pruebas/finalizar/{id}
+{
+  "comentarios":
+}
+
+//Obtener todas las pruebas
+GET: http://localhost:8001/api/pruebas
+
+//Obtener pruebas en curso
+GET: http://localhost:8001/api/pruebas/enCurso
+
+
+//Crear Empleado
+POST: http://localhost:8002/api/empleados/crearEmpleado
+{
+  "nombre": "",
+  "apellido": "",
+  "telefono": 
+}
+
+//Actualizar empleado
+PUT: http://localhost:8002/api/empleados/actualizar/{id}
+{
+  [campos a actualizar]
+}
+
+//Validar si el vehiculo esta en zona peligrosa y notificar 
+POST: http://localhost:8001/api/posiciones/validar-posicion?vehiculoId=&latitud=&longitud=
+
+"coordenadasAgencia":{
+      "lat":42.50886738457441,
+      "lon":1.5347139324337429
+   },
+
+Zonas seguras ejemplos:
+Ejemplo 1
+"lat": 42.512876, "lon": 1.529456
+Ejemplo 2
+
+"lat": 42.504692, "lon": 1.539879
+Ejemplo 3
+
+"lat": 42.509576, "lon": 1.528934
+Ejemplo 4
+
+"lat": 42.506481, "lon": 1.533765
+Ejemplo 5
+
+"lat": 42.510234, "lon": 1.536928
+"radioAdmitidoKm":5,
+Zona Restringida:
+         "noroeste":{
+            "lat":42.5100061756744,
+            "lon":1.5366548639320794
+         },
+         "sureste":{
+            "lat":42.50874384583355,
+            "lon":1.5387755676026835
+         }
+      },
+      {
+         "noroeste":{
+            "lat":42.507647709544536,
+            "lon":1.5341898505922056
+         },
+         "sureste":{
+            "lat":42.50724930962572,
+            "lon":1.5378015588544913
+         }
+      },
+      {
+         "noroeste":{
+            "lat":42.5103818437401,
+            "lon":1.529033233491418
+         },
+         "sureste":{
+            "lat":42.50964884074852,
+            "lon":1.5321785196039148
+         }
+      }
+//Obtener todas las posiciones de los vehiculos
+GET: http://localhost:8001/api/posiciones
+
+//Enviar notificaciones de promocion al telefono de interesados
+POST: http://localhost:8001/api/interesados/enviarPromocion?descripcion=
+
+//Obtener todas las notificaciones
+GET: http://localhost:8003/api/notificaciones
+
+//Generar reporte de incidentes
+GET: http://localhost:8001/api/reportes/incidentes
+
+//Generar reporte de detalle de incidentes ocurridos en prueba de un empleado
+GET: http://localhost:8001/api/reportes/incidentes/empleado/{empleadoId}
+
+//Generar reporte de km recorridos por un vehiculo en un periodo
+GET: http://localhost:8001/api/reportes/km-recorridos-vehiculo/{vehiculoId}
+
+//Generar reporte de detalle de pruebas de vehiculo
+GET: http://localhost:8001/api/reportes/pruebasVehiculo/{vehiculoId}
+
+
+//Gateway:
+reemplazar el puerto de localhost por localhost:8000
+
+//Seguridad:
+spring.security.oauth2.resourceserver.jwt.issuer-uri = https://labsys.frc.utn.edu.ar/aim/realms/backend-tps
+Grant type: Password credentials
+client-id = cliente-tpi
+client-secret= ZmiMMce6zh4xKHde1FFKbfkiThDyYpyn
+scope=tpi-scope email profile
+provider=backend-tps
+redirect-uri=/login/oauth2/code/client-tpi
+authorization-uri=https://labsys.frc.utn.edu.ar/aim/realms/backend-tps/protocol/openid-connect/auth
+Acces token-url=https://labsys.frc.utn.edu.ar/aim/realms/backend-tps/protocol/openid-connect/token
+
+
+.pathMatchers("/api/pruebas/**").hasRole("EMPLEADO")
+.pathMatchers("/api/notificaciones/**").hasRole("EMPLEADO")
+.pathMatchers("/api/posiciones").hasRole("VEHICULO")
+.pathMatchers("/api/reportes/**").hasRole("ADMIN")
+.pathMatchers("/api/empleados/**").hasRole("ADMIN")
+
+
+Usuarios y passwords
+Usuario	    Password	 Rol
+g064-A	 g064-A-backend  Admin
+g064-B	 g064-B-backend	 Empleado
+g064-C	 g064-C-backend	 Vehículo
+g064-D	 g064-D-backend	 Admin
+g064-E	 g064-E-backend	 Empleado
+g064-F	 g064-F-backend	 Vehículo
+
+
+
+
